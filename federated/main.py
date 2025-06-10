@@ -14,9 +14,9 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 torch.manual_seed(42)
 np.random.seed(42)
 
-BATCH_SIZE = 32
+BATCH_SIZE = 64
 NUM_WORKERS = 15
-NUM_CLIENTS = 10
+NUM_CLIENTS = 5
 NUM_ROUNDS = 30
 LOCAL_EPOCHS = 5
 
