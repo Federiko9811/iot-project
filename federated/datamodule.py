@@ -48,7 +48,9 @@ class AugmentedPostureDataset(Dataset):
         # 3. Simulate slight measurement inconsistencies
         # Add correlated noise between neck and torso angles (they're related)
         if len(x) >= 2:  # neck_angle and torso_angle
-            correlation_noise = torch.normal(0, 0.01, size=(1,)).item()  # Get scalar value
+            correlation_noise = torch.normal(
+                0, 0.01, size=(1,)
+            ).item()  # Get scalar value
             augmented[0] += correlation_noise  # neck_angle
             augmented[1] += correlation_noise * 0.5  # torso_angle (less correlated)
 
