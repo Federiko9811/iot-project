@@ -54,8 +54,8 @@ class FederatedTrainer:
             augment_data=True,  # Enable augmentation
             augment_factor=10.0,  # Double the dataset size
             use_smote=True,  # Use SMOTE for balanced generation
-            noise_std=0.8,  # Noise level
-            augment_prob=0.7  # 50% chance of augmentation per sample
+            noise_std=2,  # Noise level
+            augment_prob=0.9  # 50% chance of augmentation per sample
         )
 
         self.global_model = PostureMLP()
