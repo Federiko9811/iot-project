@@ -16,7 +16,7 @@ np.random.seed(42)
 
 BATCH_SIZE = 64
 NUM_WORKERS = 15
-NUM_CLIENTS = 5
+NUM_CLIENTS = 10
 NUM_ROUNDS = 30
 LOCAL_EPOCHS = 5
 
@@ -33,7 +33,7 @@ if __name__ == "__main__":
         num_clients=NUM_CLIENTS,
         num_rounds=NUM_ROUNDS,
         local_epochs=LOCAL_EPOCHS,
-        client_fraction=1.0,
+        client_fraction=0.75,  # Probability for a client to be selected
         learning_rate=0.001,
         batch_size=BATCH_SIZE,
         iid=True,
@@ -54,7 +54,7 @@ if __name__ == "__main__":
         num_clients=NUM_CLIENTS,
         num_rounds=NUM_ROUNDS,
         local_epochs=LOCAL_EPOCHS,
-        client_fraction=1.0,
+        client_fraction=0.75,  # Probability for a client to be selected
         learning_rate=0.001,
         batch_size=BATCH_SIZE,
         iid=False,

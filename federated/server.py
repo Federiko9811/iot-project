@@ -39,20 +39,28 @@ class FederatedServer:
         return selected_clients
 
     def aggregate_weights(
-        self, client_weights: List[Dict], client_sizes: List[int]
-    ) -> Dict:
-        """Implement FedAvg algorithm"""
+        self,
+        client_weights: List[Dict[str, torch.Tensor]],
+        client_sizes: List[int],
+    ) -> Dict[str, torch.Tensor]:
+        if len(client_weights) == 0:
+            raise ValueError("No client weights provided.")
+
         total_samples = sum(client_sizes)
-        aggregated_weights = copy.deepcopy(client_weights[0])
+        if total_samples == 0:
+            raise ValueError("Sum of client_sizes must be > 0.")
 
-        for key in aggregated_weights.keys():
-            aggregated_weights[key] = torch.zeros_like(aggregated_weights[key])
+        # Initialise every parameter tensor to zeros on the same device/dtype
+        aggregated = {k: torch.zeros_like(v) for k, v in client_weights[0].items()}
 
-            for i, client_weight in enumerate(client_weights):
-                weight = client_sizes[i] / total_samples
-                aggregated_weights[key] += weight * client_weight[key]
+        # Size-weighted accumulation
+        with torch.no_grad():  # gradients not required
+            for state_dict, n in zip(client_weights, client_sizes):
+                weight = n / total_samples  # proportion of samples
+                for k in aggregated.keys():  # accumulate every layer
+                    aggregated[k] += weight * state_dict[k]
 
-        return aggregated_weights
+        return aggregated
 
     def update_global_model(self, aggregated_weights: Dict):
         """Update global model with aggregated weights"""

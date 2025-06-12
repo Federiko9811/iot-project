@@ -54,8 +54,8 @@ class FederatedTrainer:
             augment_data=True,  # Enable augmentation
             augment_factor=10.0,  # Double the dataset size
             use_smote=True,  # Use SMOTE for balanced generation
-            noise_std=2,  # Noise level
-            augment_prob=0.9,  # 50% chance of augmentation per sample
+            noise_std=1,  # Noise level
+            augment_prob=0.5,  # 50% chance of augmentation per sample
         )
 
         self.global_model = PostureMLP()
@@ -161,6 +161,7 @@ class FederatedTrainer:
 
             # Select clients for this round
             selected_clients = self.server.select_clients(round_num)
+            print(f"{len(selected_clients)}/{self.num_clients} client selected")
             print(f"Selected clients: {selected_clients}")
 
             # Collect client updates
