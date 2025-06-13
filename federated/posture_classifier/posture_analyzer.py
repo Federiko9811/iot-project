@@ -223,7 +223,6 @@ class PostureAnalyzer:
             and results["neck_score"] >= sensitivity
         )
 
-        # todo do we need them here?
         if results["relative_neck_angle"] < sensitivity:
             results["issues"]["neck"] = "Straighten your neck"
 
